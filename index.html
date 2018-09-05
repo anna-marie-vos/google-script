@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <base target="_top">
+     <?!= include('stylesheet'); ?>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>View Content</h1> 
+    <container>
+      <section> 
+        <h2>List</h2>
+        <button onClick="webListItems()" >Get List</button>   
+        <ul id="listedItems"> </ul>
+      </section>
+      <section>
+        <h2>Content</h2>
+        <form id=bookForm> </form>
+      </section>
+    </container>
+   <?!= include('javascript'); ?>
+  </body>
+</html>
