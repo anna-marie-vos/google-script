@@ -1,0 +1,65 @@
+<script>
+function webListItems(){
+  // use google.script.run
+  // .withSuccessHandler(function) for interacting with front end page
+  // .withFailureHandler(function) to catch errors
+  // .custombackendfunction() to interact with the backend functions
+  
+  $('#listedItems').empty();
+  $('#listedItems').append('<p>loading...</p>')
+  
+  google.script.run
+  .withSuccessHandler(function(res){
+    $('#listedItems').empty();
+    $('#bookForm').empty();
+    
+    res.map(function(book){ 
+      $('#listedItems').append('<li><button onClick="renderForm('+book.id+')">'+book.title+'</button></li>')
+    })
+  })
+  .withFailureHandler(function(err){
+    console.log({error: err})        
+  })
+  .backEndGetInfo()
+}
+
+function renderForm(id){
+
+  $('#bookForm').empty();
+  $('#bookForm').append('<p>loading...</p>')
+  
+  google.script.run
+  .withSuccessHandler(function(res){
+  var book = res.filter(function(item){
+    return item.id === id
+  })
+
+  $('#bookForm').empty();
+
+  $('#bookForm')
+    .append('<div><p>Title</p><input type="text" name="title" value="'+book[0].title+'" /></div>')
+    .append('<div><p>Description</p><textarea rows="4" cols="50" type="text" name="description">'+book[0].description+'</textarea></div>')
+    .append('<input type="hidden" name="id" value="'+book[0].id+'"/>')
+    .append('<input type="button" onClick="submitFormInfo()" value="submit" />')
+  })
+  .withFailureHandler(function(err){
+    console.log({error: err})        
+  })
+  .backEndGetInfo()   
+}
+
+function submitFormInfo(){
+  console.log('submit button clickd')
+  var formInfo = $("#bookForm").serializeArray()
+
+  google.script.run
+  .withSuccessHandler()
+  .withFailureHandler(function(err){
+    console.log({error: err})        
+  })
+  .backEndProcessFormInfo(formInfo)
+}
+
+</script>
+
+
